@@ -1,9 +1,16 @@
+import CreateFrom from "./ui-components/RBLCreateForm.jsx";
+import UpdateForm from "./ui-components/RBLUpdateForm.jsx";
 
 
 function App() {
+
   return (
-    <div> hello
-      </div>
+    <div> 
+      <div>RBL Create Form</div>
+      <CreateFrom />
+      <div>RBL Updated Form</div>
+      <UpdateForm />
+    </div>
   );
 }
 
