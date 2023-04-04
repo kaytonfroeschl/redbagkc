@@ -1,8 +1,17 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import App from './App.js';
 
-const el = document.getElementById('root');
-const root = ReactDOM.createRoot(el);
+import "@aws-amplify/ui-react/styles.css"; // Ensure React UI libraries are styled correctly
+import { Amplify } from 'aws-amplify'
+import awsconfig from './aws-exports'
+Amplify.configure(awsconfig) // Configures the Amplify libraries with the cloud backend set up via the Amplify CLI
 
-root.render(<App />);
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+

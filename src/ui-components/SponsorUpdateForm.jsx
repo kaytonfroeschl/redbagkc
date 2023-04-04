@@ -14,7 +14,7 @@ import { DataStore } from "aws-amplify";
 export default function SponsorUpdateForm(props) {
   const {
     id: idProp,
-    sponsor,
+    sponsor: sponsorModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -38,14 +38,16 @@ export default function SponsorUpdateForm(props) {
     setLastName(cleanValues.LastName);
     setErrors({});
   };
-  const [sponsorRecord, setSponsorRecord] = React.useState(sponsor);
+  const [sponsorRecord, setSponsorRecord] = React.useState(sponsorModelProp);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp ? await DataStore.query(Sponsor, idProp) : sponsor;
+      const record = idProp
+        ? await DataStore.query(Sponsor, idProp)
+        : sponsorModelProp;
       setSponsorRecord(record);
     };
     queryData();
-  }, [idProp, sponsor]);
+  }, [idProp, sponsorModelProp]);
   React.useEffect(resetStateValues, [sponsorRecord]);
   const validations = {
     FirstName: [{ type: "Required" }],
@@ -186,7 +188,7 @@ export default function SponsorUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || sponsor)}
+          isDisabled={!(idProp || sponsorModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -198,7 +200,7 @@ export default function SponsorUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || sponsor) ||
+              !(idProp || sponsorModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

@@ -14,7 +14,7 @@ import { DataStore } from "aws-amplify";
 export default function RBLUpdateForm(props) {
   const {
     id: idProp,
-    rBL,
+    rBL: rBLModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -38,14 +38,14 @@ export default function RBLUpdateForm(props) {
     setFirstName(cleanValues.FirstName);
     setErrors({});
   };
-  const [rBLRecord, setRBLRecord] = React.useState(rBL);
+  const [rBLRecord, setRBLRecord] = React.useState(rBLModelProp);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp ? await DataStore.query(RBL, idProp) : rBL;
+      const record = idProp ? await DataStore.query(RBL, idProp) : rBLModelProp;
       setRBLRecord(record);
     };
     queryData();
-  }, [idProp, rBL]);
+  }, [idProp, rBLModelProp]);
   React.useEffect(resetStateValues, [rBLRecord]);
   const validations = {
     LastName: [{ type: "Required" }],
@@ -186,7 +186,7 @@ export default function RBLUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || rBL)}
+          isDisabled={!(idProp || rBLModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -198,7 +198,8 @@ export default function RBLUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || rBL) || Object.values(errors).some((e) => e?.hasError)
+              !(idProp || rBLModelProp) ||
+              Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
