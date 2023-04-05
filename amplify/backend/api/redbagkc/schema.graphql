@@ -18,4 +18,7 @@ type Child @model @auth(rules: [{allow: public}]) {
   ChildID: String!
   rblID: ID! @index(name: "byRBL")
   sponsorID: ID! @index(name: "bySponsor")
+  Sponsor: Sponsor @belongsTo(fields: ["rblID"])
+  RBL: RBL @belongsTo(fields: ["rblID"])
 }
+ 
