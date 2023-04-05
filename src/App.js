@@ -1,19 +1,40 @@
 import CreateFrom from "./ui-components/RBLCreateForm.jsx";
 import UpdateForm from "./ui-components/RBLUpdateForm.jsx";
 
+import { Amplify } from 'aws-amplify';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import { Authenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
 
+import awsExports from './aws-exports';
+Amplify.configure(awsExports);
 
-
-function App() {
-
+/*function App({ signOut, user }) {
   return (
-    <div> 
-      <div>RBL Create Form</div>
-      <CreateFrom />
-      <div>RBL Updated Form</div>
-      <UpdateForm />
-    </div>
+    <>
+      <h1>Hello {user.username}</h1>
+      <button onClick={signOut}>Sign out</button>
+    </>
   );
 }
 
-export default App;
+
+export default withAuthenticator(
+  return (
+    App,
+    hideSignUp={true},
+  ));
+  */
+
+  export default function App({ user }) {
+    return (
+      <Authenticator
+        hideSignUp={true}
+      >
+
+
+        {({ signOut }) => <button onClick={signOut}>Sign out</button>}
+      </Authenticator>
+    );
+  }
+
