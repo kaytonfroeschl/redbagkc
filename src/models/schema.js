@@ -118,7 +118,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "RBL"
+                            "rblID"
                         ]
                     }
                 },
@@ -202,36 +202,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "Sponsor": {
-                    "name": "Sponsor",
-                    "isArray": false,
-                    "type": {
-                        "model": "Sponsor"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "rblID"
-                        ]
-                    }
-                },
-                "RBL": {
-                    "name": "RBL",
-                    "isArray": false,
-                    "type": {
-                        "model": "RBL"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "rblID"
-                        ]
-                    }
-                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -296,5 +266,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.0",
-    "version": "6a3564ed451fbc7139b2f20601fa05f5"
+    "version": "6a482dd3e5cad52eb89c6e143e95f720"
 };

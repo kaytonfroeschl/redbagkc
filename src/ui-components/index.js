@@ -5,6 +5,7 @@
  **************************************************************************/
 
 export { default as studioTheme } from "./studioTheme";
+export { default as NewChild } from "./NewChild";
 export { default as SponsorCreateForm } from "./SponsorCreateForm";
 export { default as SponsorUpdateForm } from "./SponsorUpdateForm";
 export { default as RBLCreateForm } from "./RBLCreateForm";
