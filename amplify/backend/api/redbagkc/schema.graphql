@@ -16,7 +16,12 @@ type Child @model @auth(rules: [{allow: public}]) {
   id: ID!
   Firstname: String!
   ChildID: String!
-  rblID: ID! @index(name: "byRBL")
-  sponsorID: ID! @index(name: "bySponsor")
+  rblID: ID @index(name: "byRBL")
+  sponsorID: ID @index(name: "bySponsor")
+  ShirtSize: String
+  PantSize: String
+  Gender: String
+  Age: Int
+  ShoeSize: String
 }
  
