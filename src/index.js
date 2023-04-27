@@ -2,8 +2,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.js';
-import "@aws-amplify/ui-react/styles.css";
 import { ThemeProvider } from "@aws-amplify/ui-react";
+
+
 
 import "@aws-amplify/ui-react/styles.css"; // Ensure React UI libraries are styled correctly
 import { Amplify, Auth } from 'aws-amplify'

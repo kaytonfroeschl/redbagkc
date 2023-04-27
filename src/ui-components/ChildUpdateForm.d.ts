@@ -7,12 +7,13 @@
 import * as React from "react";
 import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { Child } from "../models";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
-export declare type NewChildInputValues = {
+export declare type ChildUpdateFormInputValues = {
     Firstname?: string;
     ChildID?: string;
     ShirtSize?: string;
@@ -21,7 +22,7 @@ export declare type NewChildInputValues = {
     Age?: number;
     ShoeSize?: string;
 };
-export declare type NewChildValidationValues = {
+export declare type ChildUpdateFormValidationValues = {
     Firstname?: ValidationFunction<string>;
     ChildID?: ValidationFunction<string>;
     ShirtSize?: ValidationFunction<string>;
@@ -31,8 +32,8 @@ export declare type NewChildValidationValues = {
     ShoeSize?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type NewChildOverridesProps = {
-    NewChildGrid?: PrimitiveOverrideProps<GridProps>;
+export declare type ChildUpdateFormOverridesProps = {
+    ChildUpdateFormGrid?: PrimitiveOverrideProps<GridProps>;
     Firstname?: PrimitiveOverrideProps<TextFieldProps>;
     ChildID?: PrimitiveOverrideProps<TextFieldProps>;
     ShirtSize?: PrimitiveOverrideProps<TextFieldProps>;
@@ -41,15 +42,15 @@ export declare type NewChildOverridesProps = {
     Age?: PrimitiveOverrideProps<TextFieldProps>;
     ShoeSize?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
-export declare type NewChildProps = React.PropsWithChildren<{
-    overrides?: NewChildOverridesProps | undefined | null;
+export declare type ChildUpdateFormProps = React.PropsWithChildren<{
+    overrides?: ChildUpdateFormOverridesProps | undefined | null;
 } & {
-    clearOnSuccess?: boolean;
-    onSubmit?: (fields: NewChildInputValues) => NewChildInputValues;
-    onSuccess?: (fields: NewChildInputValues) => void;
-    onError?: (fields: NewChildInputValues, errorMessage: string) => void;
-    onCancel?: () => void;
-    onChange?: (fields: NewChildInputValues) => NewChildInputValues;
-    onValidate?: NewChildValidationValues;
+    id?: string;
+    child?: Child;
+    onSubmit?: (fields: ChildUpdateFormInputValues) => ChildUpdateFormInputValues;
+    onSuccess?: (fields: ChildUpdateFormInputValues) => void;
+    onError?: (fields: ChildUpdateFormInputValues, errorMessage: string) => void;
+    onChange?: (fields: ChildUpdateFormInputValues) => ChildUpdateFormInputValues;
+    onValidate?: ChildUpdateFormValidationValues;
 } & React.CSSProperties>;
-export default function NewChild(props: NewChildProps): React.ReactElement;
+export default function ChildUpdateForm(props: ChildUpdateFormProps): React.ReactElement;

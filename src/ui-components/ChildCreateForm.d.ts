@@ -5,51 +5,53 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, HeadingProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
 };
 export declare type ValidationFunction<T> = (value: T, validationResponse: ValidationResponse) => ValidationResponse | Promise<ValidationResponse>;
-export declare type NewChildInputValues = {
+export declare type ChildCreateFormInputValues = {
     Firstname?: string;
     ChildID?: string;
-    ShirtSize?: string;
-    PantSize?: string;
     Gender?: string;
     Age?: number;
+    ShirtSize?: string;
+    PantSize?: string;
     ShoeSize?: string;
 };
-export declare type NewChildValidationValues = {
+export declare type ChildCreateFormValidationValues = {
     Firstname?: ValidationFunction<string>;
     ChildID?: ValidationFunction<string>;
-    ShirtSize?: ValidationFunction<string>;
-    PantSize?: ValidationFunction<string>;
     Gender?: ValidationFunction<string>;
     Age?: ValidationFunction<number>;
+    ShirtSize?: ValidationFunction<string>;
+    PantSize?: ValidationFunction<string>;
     ShoeSize?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
-export declare type NewChildOverridesProps = {
-    NewChildGrid?: PrimitiveOverrideProps<GridProps>;
+export declare type ChildCreateFormOverridesProps = {
+    ChildCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
+    SectionalElement0?: PrimitiveOverrideProps<HeadingProps>;
+    RowGrid1?: PrimitiveOverrideProps<GridProps>;
     Firstname?: PrimitiveOverrideProps<TextFieldProps>;
     ChildID?: PrimitiveOverrideProps<TextFieldProps>;
-    ShirtSize?: PrimitiveOverrideProps<TextFieldProps>;
-    PantSize?: PrimitiveOverrideProps<TextFieldProps>;
+    RowGrid2?: PrimitiveOverrideProps<GridProps>;
     Gender?: PrimitiveOverrideProps<TextFieldProps>;
     Age?: PrimitiveOverrideProps<TextFieldProps>;
-    ShoeSize?: PrimitiveOverrideProps<TextFieldProps>;
+    ShirtSize?: PrimitiveOverrideProps<SelectFieldProps>;
+    PantSize?: PrimitiveOverrideProps<SelectFieldProps>;
+    ShoeSize?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
-export declare type NewChildProps = React.PropsWithChildren<{
-    overrides?: NewChildOverridesProps | undefined | null;
+export declare type ChildCreateFormProps = React.PropsWithChildren<{
+    overrides?: ChildCreateFormOverridesProps | undefined | null;
 } & {
     clearOnSuccess?: boolean;
-    onSubmit?: (fields: NewChildInputValues) => NewChildInputValues;
-    onSuccess?: (fields: NewChildInputValues) => void;
-    onError?: (fields: NewChildInputValues, errorMessage: string) => void;
-    onCancel?: () => void;
-    onChange?: (fields: NewChildInputValues) => NewChildInputValues;
-    onValidate?: NewChildValidationValues;
+    onSubmit?: (fields: ChildCreateFormInputValues) => ChildCreateFormInputValues;
+    onSuccess?: (fields: ChildCreateFormInputValues) => void;
+    onError?: (fields: ChildCreateFormInputValues, errorMessage: string) => void;
+    onChange?: (fields: ChildCreateFormInputValues) => ChildCreateFormInputValues;
+    onValidate?: ChildCreateFormValidationValues;
 } & React.CSSProperties>;
-export default function NewChild(props: NewChildProps): React.ReactElement;
+export default function ChildCreateForm(props: ChildCreateFormProps): React.ReactElement;

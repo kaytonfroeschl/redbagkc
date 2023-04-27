@@ -11,13 +11,13 @@ import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Child } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
-export default function NewChild(props) {
+export default function ChildUpdateForm(props) {
   const {
-    clearOnSuccess = true,
+    id: idProp,
+    child: childModelProp,
     onSuccess,
     onError,
     onSubmit,
-    onCancel,
     onValidate,
     onChange,
     overrides,
@@ -41,15 +41,29 @@ export default function NewChild(props) {
   const [ShoeSize, setShoeSize] = React.useState(initialValues.ShoeSize);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setFirstname(initialValues.Firstname);
-    setChildID(initialValues.ChildID);
-    setShirtSize(initialValues.ShirtSize);
-    setPantSize(initialValues.PantSize);
-    setGender(initialValues.Gender);
-    setAge(initialValues.Age);
-    setShoeSize(initialValues.ShoeSize);
+    const cleanValues = childRecord
+      ? { ...initialValues, ...childRecord }
+      : initialValues;
+    setFirstname(cleanValues.Firstname);
+    setChildID(cleanValues.ChildID);
+    setShirtSize(cleanValues.ShirtSize);
+    setPantSize(cleanValues.PantSize);
+    setGender(cleanValues.Gender);
+    setAge(cleanValues.Age);
+    setShoeSize(cleanValues.ShoeSize);
     setErrors({});
   };
+  const [childRecord, setChildRecord] = React.useState(childModelProp);
+  React.useEffect(() => {
+    const queryData = async () => {
+      const record = idProp
+        ? await DataStore.query(Child, idProp)
+        : childModelProp;
+      setChildRecord(record);
+    };
+    queryData();
+  }, [idProp, childModelProp]);
+  React.useEffect(resetStateValues, [childRecord]);
   const validations = {
     Firstname: [{ type: "Required" }],
     ChildID: [{ type: "Required" }],
@@ -121,12 +135,13 @@ export default function NewChild(props) {
               modelFields[key] = undefined;
             }
           });
-          await DataStore.save(new Child(modelFields));
+          await DataStore.save(
+            Child.copyOf(childRecord, (updated) => {
+              Object.assign(updated, modelFields);
+            })
+          );
           if (onSuccess) {
             onSuccess(modelFields);
-          }
-          if (clearOnSuccess) {
-            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -134,7 +149,7 @@ export default function NewChild(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "NewChild")}
+      {...getOverrideProps(overrides, "ChildUpdateForm")}
       {...rest}
     >
       <TextField
@@ -355,23 +370,28 @@ export default function NewChild(props) {
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
       >
+        <Button
+          children="Reset"
+          type="reset"
+          onClick={(event) => {
+            event.preventDefault();
+            resetStateValues();
+          }}
+          isDisabled={!(idProp || childModelProp)}
+          {...getOverrideProps(overrides, "ResetButton")}
+        ></Button>
         <Flex
           gap="15px"
           {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
           <Button
-            children="Cancel"
-            type="button"
-            onClick={() => {
-              onCancel && onCancel();
-            }}
-            {...getOverrideProps(overrides, "CancelButton")}
-          ></Button>
-          <Button
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={Object.values(errors).some((e) => e?.hasError)}
+            isDisabled={
+              !(idProp || childModelProp) ||
+              Object.values(errors).some((e) => e?.hasError)
+            }
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>
