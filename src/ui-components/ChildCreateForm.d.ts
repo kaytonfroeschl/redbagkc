@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, HeadingProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 export declare type ValidationResponse = {
     hasError: boolean;
@@ -15,34 +15,31 @@ export declare type ValidationFunction<T> = (value: T, validationResponse: Valid
 export declare type ChildCreateFormInputValues = {
     Firstname?: string;
     ChildID?: string;
-    Gender?: string;
-    Age?: number;
     ShirtSize?: string;
     PantSize?: string;
+    Gender?: string;
+    Age?: number;
     ShoeSize?: string;
 };
 export declare type ChildCreateFormValidationValues = {
     Firstname?: ValidationFunction<string>;
     ChildID?: ValidationFunction<string>;
-    Gender?: ValidationFunction<string>;
-    Age?: ValidationFunction<number>;
     ShirtSize?: ValidationFunction<string>;
     PantSize?: ValidationFunction<string>;
+    Gender?: ValidationFunction<string>;
+    Age?: ValidationFunction<number>;
     ShoeSize?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ChildCreateFormOverridesProps = {
     ChildCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
-    SectionalElement0?: PrimitiveOverrideProps<HeadingProps>;
-    RowGrid1?: PrimitiveOverrideProps<GridProps>;
     Firstname?: PrimitiveOverrideProps<TextFieldProps>;
     ChildID?: PrimitiveOverrideProps<TextFieldProps>;
-    RowGrid2?: PrimitiveOverrideProps<GridProps>;
+    ShirtSize?: PrimitiveOverrideProps<TextFieldProps>;
+    PantSize?: PrimitiveOverrideProps<TextFieldProps>;
     Gender?: PrimitiveOverrideProps<TextFieldProps>;
     Age?: PrimitiveOverrideProps<TextFieldProps>;
-    ShirtSize?: PrimitiveOverrideProps<SelectFieldProps>;
-    PantSize?: PrimitiveOverrideProps<SelectFieldProps>;
-    ShoeSize?: PrimitiveOverrideProps<SelectFieldProps>;
+    ShoeSize?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ChildCreateFormProps = React.PropsWithChildren<{
     overrides?: ChildCreateFormOverridesProps | undefined | null;
