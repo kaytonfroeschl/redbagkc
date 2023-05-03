@@ -78,8 +78,13 @@ type EagerChild = {
   readonly id: string;
   readonly Firstname: string;
   readonly ChildID: string;
-  readonly rblID: string;
-  readonly sponsorID: string;
+  readonly rblID?: string | null;
+  readonly sponsorID?: string | null;
+  readonly ShirtSize?: string | null;
+  readonly PantSize?: string | null;
+  readonly Gender?: string | null;
+  readonly Age?: number | null;
+  readonly ShoeSize?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -92,8 +97,13 @@ type LazyChild = {
   readonly id: string;
   readonly Firstname: string;
   readonly ChildID: string;
-  readonly rblID: string;
-  readonly sponsorID: string;
+  readonly rblID?: string | null;
+  readonly sponsorID?: string | null;
+  readonly ShirtSize?: string | null;
+  readonly PantSize?: string | null;
+  readonly Gender?: string | null;
+  readonly Age?: number | null;
+  readonly ShoeSize?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
