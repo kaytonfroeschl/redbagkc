@@ -3,6 +3,7 @@ import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from './aws-exports';
 import ChildCreate from './ui-components/ChildCreate';
+import Childlist from './ui-components/ChildList';
 
 Amplify.configure(awsExports);
 
@@ -16,7 +17,7 @@ export default function App({ user }){
         <main>
           <h1>Welcome to Red Bag</h1>
           <button onClick={signOut}>Sign out</button>
-          <h3>List all children here</h3>
+          <Childlist /> 
           <ChildCreate />
         </main>
       )

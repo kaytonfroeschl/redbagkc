@@ -20,7 +20,7 @@ function ChildCreate() {
 
     return (
         <div>
-            <button onClick={handleNewChildClick}>New Child</button>
+            <button class="Button" onClick={handleNewChildClick}>New Child</button>
             {showForm && <NewChild onSuccess={handleOnSuccess} onCancel={handleOnCancel} width='40%' /> }
         </div>
     )

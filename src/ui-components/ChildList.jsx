@@ -32,8 +32,7 @@ export default function ChildList(props) {
       type="list"
       searchPlaceholder="Search..."
       direction="column"
-      alignItems="stretch"
-      justifyContent="left"
+      justifyContent="stretch"
       items={items || []}
       {...getOverrideProps(overrides, "ChildList")}
       {...rest}

@@ -23,7 +23,6 @@ export { default as Ellipse } from "./Ellipse";
 export { default as FeaturesText2x2 } from "./FeaturesText2x2";
 export { default as HeroLayout3 } from "./HeroLayout3";
 export { default as Features4x1 } from "./Features4x1";
-export { default as Desktop1 } from "./Desktop1";
 export { default as ProductCard } from "./ProductCard";
 export { default as HeroLayout4 } from "./HeroLayout4";
 export { default as HeroLayout2 } from "./HeroLayout2";
