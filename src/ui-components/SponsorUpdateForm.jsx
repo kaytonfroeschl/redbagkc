@@ -6,11 +6,184 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Sponsor } from "../models";
+import {
+  Autocomplete,
+  Badge,
+  Button,
+  Divider,
+  Flex,
+  Grid,
+  Icon,
+  ScrollView,
+  Text,
+  TextField,
+  useTheme,
+} from "@aws-amplify/ui-react";
+import {
+  getOverrideProps,
+  useDataStoreBinding,
+} from "@aws-amplify/ui-react/internal";
+import { Sponsor, Child } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
+function ArrayField({
+  items = [],
+  onChange,
+  label,
+  inputFieldRef,
+  children,
+  hasError,
+  setFieldValue,
+  currentFieldValue,
+  defaultFieldValue,
+  lengthLimit,
+  getBadgeText,
+  errorMessage,
+}) {
+  const labelElement = <Text>{label}</Text>;
+  const {
+    tokens: {
+      components: {
+        fieldmessages: { error: errorStyles },
+      },
+    },
+  } = useTheme();
+  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
+  const [isEditing, setIsEditing] = React.useState();
+  React.useEffect(() => {
+    if (isEditing) {
+      inputFieldRef?.current?.focus();
+    }
+  }, [isEditing]);
+  const removeItem = async (removeIndex) => {
+    const newItems = items.filter((value, index) => index !== removeIndex);
+    await onChange(newItems);
+    setSelectedBadgeIndex(undefined);
+  };
+  const addItem = async () => {
+    if (
+      currentFieldValue !== undefined &&
+      currentFieldValue !== null &&
+      currentFieldValue !== "" &&
+      !hasError
+    ) {
+      const newItems = [...items];
+      if (selectedBadgeIndex !== undefined) {
+        newItems[selectedBadgeIndex] = currentFieldValue;
+        setSelectedBadgeIndex(undefined);
+      } else {
+        newItems.push(currentFieldValue);
+      }
+      await onChange(newItems);
+      setIsEditing(false);
+    }
+  };
+  const arraySection = (
+    <React.Fragment>
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {getBadgeText ? getBadgeText(value) : value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
+    </React.Fragment>
+  );
+  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
+    return (
+      <React.Fragment>
+        {labelElement}
+        {arraySection}
+      </React.Fragment>
+    );
+  }
+  return (
+    <React.Fragment>
+      {labelElement}
+      {isEditing && children}
+      {!isEditing ? (
+        <>
+          <Button
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Add item
+          </Button>
+          {errorMessage && hasError && (
+            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
+              {errorMessage}
+            </Text>
+          )}
+        </>
+      ) : (
+        <Flex justifyContent="flex-end">
+          {(currentFieldValue || isEditing) && (
+            <Button
+              children="Cancel"
+              type="button"
+              size="small"
+              onClick={() => {
+                setFieldValue(defaultFieldValue);
+                setIsEditing(false);
+                setSelectedBadgeIndex(undefined);
+              }}
+            ></Button>
+          )}
+          <Button
+            size="small"
+            variation="link"
+            isDisabled={hasError}
+            onClick={addItem}
+          >
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
+          </Button>
+        </Flex>
+      )}
+      {arraySection}
+    </React.Fragment>
+  );
+}
 export default function SponsorUpdateForm(props) {
   const {
     id: idProp,
@@ -26,32 +199,62 @@ export default function SponsorUpdateForm(props) {
   const initialValues = {
     FirstName: "",
     LastName: "",
+    Children: [],
   };
   const [FirstName, setFirstName] = React.useState(initialValues.FirstName);
   const [LastName, setLastName] = React.useState(initialValues.LastName);
+  const [Children, setChildren] = React.useState(initialValues.Children);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = sponsorRecord
-      ? { ...initialValues, ...sponsorRecord }
+      ? { ...initialValues, ...sponsorRecord, Children: linkedChildren }
       : initialValues;
     setFirstName(cleanValues.FirstName);
     setLastName(cleanValues.LastName);
+    setChildren(cleanValues.Children ?? []);
+    setCurrentChildrenValue(undefined);
+    setCurrentChildrenDisplayValue("");
     setErrors({});
   };
   const [sponsorRecord, setSponsorRecord] = React.useState(sponsorModelProp);
+  const [linkedChildren, setLinkedChildren] = React.useState([]);
+  const canUnlinkChildren = true;
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
         ? await DataStore.query(Sponsor, idProp)
         : sponsorModelProp;
       setSponsorRecord(record);
+      const linkedChildren = record ? await record.Children.toArray() : [];
+      setLinkedChildren(linkedChildren);
     };
     queryData();
   }, [idProp, sponsorModelProp]);
-  React.useEffect(resetStateValues, [sponsorRecord]);
+  React.useEffect(resetStateValues, [sponsorRecord, linkedChildren]);
+  const [currentChildrenDisplayValue, setCurrentChildrenDisplayValue] =
+    React.useState("");
+  const [currentChildrenValue, setCurrentChildrenValue] =
+    React.useState(undefined);
+  const ChildrenRef = React.createRef();
+  const getIDValue = {
+    Children: (r) => JSON.stringify({ id: r?.id }),
+  };
+  const ChildrenIdSet = new Set(
+    Array.isArray(Children)
+      ? Children.map((r) => getIDValue.Children?.(r))
+      : getIDValue.Children?.(Children)
+  );
+  const childRecords = useDataStoreBinding({
+    type: "collection",
+    model: Child,
+  }).items;
+  const getDisplayValue = {
+    Children: (r) => `${r?.Firstname ? r?.Firstname + " - " : ""}${r?.id}`,
+  };
   const validations = {
     FirstName: [{ type: "Required" }],
     LastName: [{ type: "Required" }],
+    Children: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -81,19 +284,28 @@ export default function SponsorUpdateForm(props) {
         let modelFields = {
           FirstName,
           LastName,
+          Children,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
             if (Array.isArray(modelFields[fieldName])) {
               promises.push(
                 ...modelFields[fieldName].map((item) =>
-                  runValidationTasks(fieldName, item)
+                  runValidationTasks(
+                    fieldName,
+                    item,
+                    getDisplayValue[fieldName]
+                  )
                 )
               );
               return promises;
             }
             promises.push(
-              runValidationTasks(fieldName, modelFields[fieldName])
+              runValidationTasks(
+                fieldName,
+                modelFields[fieldName],
+                getDisplayValue[fieldName]
+              )
             );
             return promises;
           }, [])
@@ -110,11 +322,60 @@ export default function SponsorUpdateForm(props) {
               modelFields[key] = undefined;
             }
           });
-          await DataStore.save(
-            Sponsor.copyOf(sponsorRecord, (updated) => {
-              Object.assign(updated, modelFields);
-            })
+          const promises = [];
+          const childrenToLink = [];
+          const childrenToUnLink = [];
+          const childrenSet = new Set();
+          const linkedChildrenSet = new Set();
+          Children.forEach((r) => childrenSet.add(getIDValue.Children?.(r)));
+          linkedChildren.forEach((r) =>
+            linkedChildrenSet.add(getIDValue.Children?.(r))
           );
+          linkedChildren.forEach((r) => {
+            if (!childrenSet.has(getIDValue.Children?.(r))) {
+              childrenToUnLink.push(r);
+            }
+          });
+          Children.forEach((r) => {
+            if (!linkedChildrenSet.has(getIDValue.Children?.(r))) {
+              childrenToLink.push(r);
+            }
+          });
+          childrenToUnLink.forEach((original) => {
+            if (!canUnlinkChildren) {
+              throw Error(
+                `Child ${original.id} cannot be unlinked from Sponsor because undefined is a required field.`
+              );
+            }
+            promises.push(
+              DataStore.save(
+                Child.copyOf(original, (updated) => {
+                  updated.Sponsor = null;
+                })
+              )
+            );
+          });
+          childrenToLink.forEach((original) => {
+            promises.push(
+              DataStore.save(
+                Child.copyOf(original, (updated) => {
+                  updated.Sponsor = sponsorRecord;
+                })
+              )
+            );
+          });
+          const modelFieldsToSave = {
+            FirstName: modelFields.FirstName,
+            LastName: modelFields.LastName,
+          };
+          promises.push(
+            DataStore.save(
+              Sponsor.copyOf(sponsorRecord, (updated) => {
+                Object.assign(updated, modelFieldsToSave);
+              })
+            )
+          );
+          await Promise.all(promises);
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -138,6 +399,7 @@ export default function SponsorUpdateForm(props) {
             const modelFields = {
               FirstName: value,
               LastName,
+              Children,
             };
             const result = onChange(modelFields);
             value = result?.FirstName ?? value;
@@ -163,6 +425,7 @@ export default function SponsorUpdateForm(props) {
             const modelFields = {
               FirstName,
               LastName: value,
+              Children,
             };
             const result = onChange(modelFields);
             value = result?.LastName ?? value;
@@ -177,6 +440,79 @@ export default function SponsorUpdateForm(props) {
         hasError={errors.LastName?.hasError}
         {...getOverrideProps(overrides, "LastName")}
       ></TextField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              FirstName,
+              LastName,
+              Children: values,
+            };
+            const result = onChange(modelFields);
+            values = result?.Children ?? values;
+          }
+          setChildren(values);
+          setCurrentChildrenValue(undefined);
+          setCurrentChildrenDisplayValue("");
+        }}
+        currentFieldValue={currentChildrenValue}
+        label={"Children"}
+        items={Children}
+        hasError={errors?.Children?.hasError}
+        errorMessage={errors?.Children?.errorMessage}
+        getBadgeText={getDisplayValue.Children}
+        setFieldValue={(model) => {
+          setCurrentChildrenDisplayValue(getDisplayValue.Children(model));
+          setCurrentChildrenValue(model);
+        }}
+        inputFieldRef={ChildrenRef}
+        defaultFieldValue={""}
+      >
+        <Autocomplete
+          label="Children"
+          isRequired={false}
+          isReadOnly={false}
+          placeholder="Search Child"
+          value={currentChildrenDisplayValue}
+          options={childRecords
+            .filter((r) => !ChildrenIdSet.has(getIDValue.Children?.(r)))
+            .map((r) => ({
+              id: getIDValue.Children?.(r),
+              label: getDisplayValue.Children?.(r),
+            }))}
+          onSelect={({ id, label }) => {
+            setCurrentChildrenValue(
+              childRecords.find((r) =>
+                Object.entries(JSON.parse(id)).every(
+                  ([key, value]) => r[key] === value
+                )
+              )
+            );
+            setCurrentChildrenDisplayValue(label);
+            runValidationTasks("Children", label);
+          }}
+          onClear={() => {
+            setCurrentChildrenDisplayValue("");
+          }}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.Children?.hasError) {
+              runValidationTasks("Children", value);
+            }
+            setCurrentChildrenDisplayValue(value);
+            setCurrentChildrenValue(undefined);
+          }}
+          onBlur={() =>
+            runValidationTasks("Children", currentChildrenDisplayValue)
+          }
+          errorMessage={errors.Children?.errorMessage}
+          hasError={errors.Children?.hasError}
+          ref={ChildrenRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "Children")}
+        ></Autocomplete>
+      </ArrayField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

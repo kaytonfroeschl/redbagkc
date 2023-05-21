@@ -23,5 +23,6 @@ type Child @model @auth(rules: [{allow: public}]) {
   Gender: String
   Age: Int
   ShoeSize: String
-}
- 
+  RBL: RBL @belongsTo(fields: ["rblID"])
+  Sponsor: Sponsor @belongsTo(fields: ["sponsorID"])
+} 
