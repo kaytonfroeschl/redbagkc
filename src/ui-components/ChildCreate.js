@@ -1,5 +1,5 @@
 import { useState } from "react";
-import NewChild from "./NewChild";
+import ChildCreateForm from "./ChildCreateForm";
 
 function ChildCreate() {
     const [showForm, setShowForm] = useState(false);
@@ -21,7 +21,7 @@ function ChildCreate() {
     return (
         <div>
             <button class="Button" onClick={handleNewChildClick}>New Child</button>
-            {showForm && <NewChild onSuccess={handleOnSuccess} onCancel={handleOnCancel} width='40%' /> }
+            {showForm && <ChildCreateForm onSuccess={handleOnSuccess} onCancel={handleOnCancel} width='40%' /> }
         </div>
     )
 };
