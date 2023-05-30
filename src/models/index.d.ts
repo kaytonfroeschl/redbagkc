@@ -1,6 +1,6 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
 
 
 
@@ -85,6 +85,8 @@ type EagerChild = {
   readonly Gender?: string | null;
   readonly Age?: number | null;
   readonly ShoeSize?: string | null;
+  readonly RBL?: RBL | null;
+  readonly Sponsor?: Sponsor | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -104,6 +106,8 @@ type LazyChild = {
   readonly Gender?: string | null;
   readonly Age?: number | null;
   readonly ShoeSize?: string | null;
+  readonly RBL: AsyncItem<RBL | undefined>;
+  readonly Sponsor: AsyncItem<Sponsor | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
