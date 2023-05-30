@@ -14,27 +14,6 @@
     "categories": {
       "auth": {
         "redbagkc730bf8f9": {}
-      },
-      "api": {
-        "redbagkc": {}
-      }
-    }
-  },
-  "bill": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-redbagkc-bill-195245-authRole",
-      "UnauthRoleArn": "arn:aws:iam::420627818090:role/amplify-redbagkc-bill-195245-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::420627818090:role/amplify-redbagkc-bill-195245-authRole",
-      "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-redbagkc-bill-195245-deployment",
-      "UnauthRoleName": "amplify-redbagkc-bill-195245-unauthRole",
-      "StackName": "amplify-redbagkc-bill-195245",
-      "StackId": "arn:aws:cloudformation:us-east-1:420627818090:stack/amplify-redbagkc-bill-195245/be3a7970-e859-11ed-ac68-0a28ba9c06bb",
-      "AmplifyAppId": "d1vdbxe07nvf1s"
-    },
-    "categories": {
-      "auth": {
-        "redbagkc730bf8f9": {}
       }
     }
   }
