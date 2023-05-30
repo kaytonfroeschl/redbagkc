@@ -9,7 +9,6 @@ import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 
 
-
 import awsExports from './aws-exports';
 Amplify.configure(awsExports);
 
@@ -27,30 +26,3 @@ export default function App({ user }){
   )
 };
   
-
-/*function App({ signOut, user }) {
-  return (
-    <>
-      <h1>Hello {user.username}</h1>
-      <button onClick={signOut}>Sign out</button>
-    </>
-  );
-}
-
-
-export default withAuthenticator(
-  return (
-    App,
-    hideSignUp={true},
-  ));
-  */
-
-  /*export default function App({ user }) {
-    return (
-      <Authenticator hideSignUp={true}>
-        {({ signOut }) => <button onClick={signOut}>Sign out</button>}
-        <button>hi</button>
-      </Authenticator>
-    );
-  }*/
-
