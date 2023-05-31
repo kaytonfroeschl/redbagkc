@@ -412,7 +412,9 @@ export default function SponsorCreateForm(props) {
         errorMessage={errors?.Children?.errorMessage}
         getBadgeText={getDisplayValue.Children}
         setFieldValue={(model) => {
-          setCurrentChildrenDisplayValue(getDisplayValue.Children(model));
+          setCurrentChildrenDisplayValue(
+            model ? getDisplayValue.Children(model) : ""
+          );
           setCurrentChildrenValue(model);
         }}
         inputFieldRef={ChildrenRef}

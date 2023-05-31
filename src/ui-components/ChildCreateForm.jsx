@@ -984,7 +984,7 @@ export default function ChildCreateForm(props) {
         errorMessage={errors?.RBL?.errorMessage}
         getBadgeText={getDisplayValue.RBL}
         setFieldValue={(model) => {
-          setCurrentRBLDisplayValue(getDisplayValue.RBL(model));
+          setCurrentRBLDisplayValue(model ? getDisplayValue.RBL(model) : "");
           setCurrentRBLValue(model);
         }}
         inputFieldRef={RBLRef}
@@ -1062,7 +1062,9 @@ export default function ChildCreateForm(props) {
         errorMessage={errors?.Sponsor?.errorMessage}
         getBadgeText={getDisplayValue.Sponsor}
         setFieldValue={(model) => {
-          setCurrentSponsorDisplayValue(getDisplayValue.Sponsor(model));
+          setCurrentSponsorDisplayValue(
+            model ? getDisplayValue.Sponsor(model) : ""
+          );
           setCurrentSponsorValue(model);
         }}
         inputFieldRef={SponsorRef}

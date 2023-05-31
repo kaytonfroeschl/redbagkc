@@ -1,55 +1,31 @@
-import { Amplify } from 'aws-amplify';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
-import awsExports from './aws-exports';
-import ChildCreate from './ui-components/ChildCreate';
-import Childlist from './ui-components/ChildList';
+import ChildCreate from './components/ChildCreate';
+import Childlist from './components/ChildList';
+import UseKidsContext from './hooks/use-kids-context';
+import { useEffect } from 'react';
 
-Amplify.configure(awsExports);
-
-export default function App({ user }){
-  return(
-    <Authenticator hideSignUp={true}>
-    {
-      (
-        { signOut, user }
-      ) => (
-        <main>
-          <h1>Welcome to Red Bag</h1>
-          <button onClick={signOut}>Sign out</button>
-          <Childlist /> 
-          <ChildCreate />
-        </main>
-      )
-    }
-  </Authenticator>
-  )
-};
+function App({ user }) {
+  const { fetchKids } = UseKidsContext();
   
+  useEffect(() => {fetchKids()}, [fetchKids]);
 
-/*function App({ signOut, user }) {
   return (
-    <>
-      <h1>Hello {user.username}</h1>
-      <button onClick={signOut}>Sign out</button>
-    </>
+      <Authenticator hideSignUp={true}>
+      {
+        (
+          { signOut, user }
+        ) => (
+          <main>
+            <h1>Welcome to Red Bag</h1>
+            <button onClick={signOut}>Sign out</button>
+            <Childlist /> 
+            <ChildCreate />
+          </main>
+        )
+      }
+    </Authenticator>
   );
 }
 
-
-export default withAuthenticator(
-  return (
-    App,
-    hideSignUp={true},
-  ));
-  */
-
-  /*export default function App({ user }) {
-    return (
-      <Authenticator hideSignUp={true}>
-        {({ signOut }) => <button onClick={signOut}>Sign out</button>}
-        <button>hi</button>
-      </Authenticator>
-    );
-  }*/
-
+export default App;
