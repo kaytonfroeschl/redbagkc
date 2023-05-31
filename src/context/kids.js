@@ -1,6 +1,6 @@
 import { createContext, useState, useCallback } from "react";
 import { API, graphqlOperation } from "@aws-amplify/api";
-import { listKids } from "../graphql/queries";
+import { listChildren } from "../graphql/queries";
 
 const KidsContext = createContext();
 
@@ -9,8 +9,8 @@ function Provider ({children}){
 
     const unstableFetchKids = async () => {
         try {
-            const response = await API.graphql(graphqlOperation(listKids));
-            const kids = response.data.listKids.items;
+            const response = await API.graphql(graphqlOperation(listChildren));
+            const kids = response.data.listChildren.items;
             setKids(kids);
         } 
         catch (err) { 
