@@ -6,12 +6,24 @@ function ChildList() {
     const { kids } = UseKidsContext();
 
     const renderKids = kids.map((kid) => {
-        return <ChildShow key={kid.id} kid={kid} />
+        return <ChildShow key={kid.id} kid={kid} />;
     });
 
     return (
-        <div>
-            {renderKids}
+        <div>           
+            <Table border={"thin"} size={"small"} >
+                <TableHead>
+                    <TableRow>
+                        <TableCell as="th">Child ID</TableCell>
+                        <TableCell as="th">First Name</TableCell>
+                        <TableCell as="th">Red Bag Lady</TableCell>
+                        <TableCell as="th">Sponsor</TableCell>
+                    </TableRow>
+                </TableHead>
+                    <TableBody>
+                        {renderKids}
+                    </TableBody>
+            </Table>
         </div>
     );
     

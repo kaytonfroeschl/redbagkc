@@ -1,18 +1,22 @@
-import { TableRow, TableCell } from "@aws-amplify/ui-react";
-import { useState } from "react";
+import { TableRow, TableCell, TableBody } from "@aws-amplify/ui-react";
 
 function genRBL(kid) {
     if(kid.RBL !== null){
         return kid.RBL.FirstName + " " + kid.RBL.LastName;
     } else{
-        return "null";
+        return "";
     }
-}
+};
 
+function genSponsor(kid) {
+    if(kid.Sponsor !== null){
+        return kid.Sponsor.FirstName + " " + kid.Sponsor.LastName;
+    } else{
+        return "";
+    }
+};
 
 function ChildShow({kid}) {
-    console.log(kid);
-
     return (
         <TableRow>
             <TableCell>
@@ -24,9 +28,9 @@ function ChildShow({kid}) {
             <TableCell>
                 {genRBL(kid)}
             </TableCell>
-            {/*<TableCell>
-                {kid.Sponsor.Firstname + " " + kid.Sponsor.Lastname}
-    </TableCell>*/}
+            <TableCell>
+                {genSponsor(kid)}
+            </TableCell>
         </TableRow>
     );    
 };

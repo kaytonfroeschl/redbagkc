@@ -14,7 +14,7 @@ function Provider ({children}){
             setKids(kids);
         } 
         catch (err) { 
-            console.log('error fetching kids'); 
+            console.log('error in Provider: await API.graphql(graphqlOperation(listChildren))'); 
         };        
     };
 
