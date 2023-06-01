@@ -1,8 +1,10 @@
 import { useState } from "react";
 import ChildCreateForm from "../ui-components/ChildCreateForm";
+import UseKidsContext from "../hooks/use-kids-context";
 
 function ChildCreate() {
     const [showForm, setShowForm] = useState(false);
+    const { fetchKids } = UseKidsContext();
 
     const handleNewChildClick = () => {
         setShowForm(true);
@@ -10,12 +12,11 @@ function ChildCreate() {
 
     const handleOnSuccess = () => {
         setShowForm(false);
-        console.debug("handleOnCancel");
+        fetchKids();
     };
 
     const handleOnCancel = () => {
         setShowForm(false);
-        console.debug("handleOnCancel");
     };
 
     return (

@@ -19,6 +19,7 @@ function App({ user }) {
           <main>
             <h1>Welcome to Red Bag</h1>
             <button onClick={signOut}>Sign out</button>
+            {/*console.log("App.js in <main>")*/}
             <Childlist /> 
             <ChildCreate />
           </main>

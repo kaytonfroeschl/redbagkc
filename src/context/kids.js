@@ -12,6 +12,7 @@ function Provider ({children}){
             const response = await API.graphql(graphqlOperation(listChildren));
             const kids = response.data.listChildren.items;
             setKids(kids);
+            /*console.log("fetchKids run");*/
         } 
         catch (err) { 
             console.log('error in Provider: await API.graphql(graphqlOperation(listChildren))'); 
