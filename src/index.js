@@ -8,10 +8,13 @@ import { Amplify } from 'aws-amplify'
 import awsconfig from './aws-exports'
 import { Provider } from './context/kids.js';
 
+console.log("index.js Begin");
+
 Amplify.configure(awsconfig) // Configures the Amplify libraries with the cloud backend set up via the Amplify CLI
 
+console.log("index.js Root");
 const root = ReactDOM.createRoot(document.getElementById('root'));
-
+console.log("index.js Root Render");
 root.render(
     <React.StrictMode>
       <ThemeProvider>
@@ -21,4 +24,4 @@ root.render(
       </ThemeProvider>
     </React.StrictMode>
 );
-
+console.log("index.js End");

@@ -10,15 +10,16 @@ function Provider ({children}){
     const unstableFetchKids = async () => {
         try {
             const response = await API.graphql(graphqlOperation(listChildren));
-            const kids = response.data.listChildren.items;
-            setKids(kids);
-            /*console.log("fetchKids run");*/
+            setKids(response.data.listChildren.items);
+            console.log("kids.js: Provider: called API.graphql");
+            console.log(kids);
         } 
         catch (err) { 
             console.log('error in Provider: await API.graphql(graphqlOperation(listChildren))'); 
         };        
     };
-
+    
+    console.log("kids.js: Provider: fetchKids");
     const fetchKids = useCallback(unstableFetchKids, []);
 
     const valuesToShare = {
