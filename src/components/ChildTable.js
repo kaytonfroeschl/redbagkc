@@ -1,35 +1,45 @@
-import { Component } from "react";
-import Loading from "./Loading";
+import ChildCreate from "./ChildCreate";
 import DataTable from "./DataTable";
 import UseKidsContext from "../hooks/use-kids-context";
+// filters
+import { DropdownFilter, TextSearchFilter } from "../utilities/filters";
 
 const columns =  [
     {
-        Header: "ChildID",
-        accessor: "childID"
+        Header: "Child ID",
+        accessor: "ChildID",
+        Filter: TextSearchFilter,
+        filter: "rankedMatchSorter"
     },
     {
         Header: "First Name",
-        accessor: "firstName"
+        accessor: "Firstname",
+        Filter: TextSearchFilter
     }, 
     {
         Header: "Red Bag Lady",
-        accessor: "RBL"
+        accessor: "RBL",
+        Filter: DropdownFilter
     },
     {
         Header: "Sponsor",
-        accessor: "sponsor"
+        accessor: "Sponsor",
+        Filter: DropdownFilter
     }
 ];
 
-function ChildTable() {
-    console.log("ChildTable: before");
-    const { kids } = UseKidsContext();
-    console.log("ChildTable: after");
+function ChildTable() {    
+    const { newKids } = UseKidsContext();
+
+    const handleNewChildClick = () => {
+        console.log("ChildCreate");
+        <ChildCreate />
+    };
+
     return (
         <div>
-            <h1>Child Table Goes Here</h1>
-            {/*<DataTable columns={columns} data={kids} />*/}
+            <button onClick={handleNewChildClick}>New Child</button>
+            <DataTable columns={columns} data={newKids} />
         </div>
     )
 };

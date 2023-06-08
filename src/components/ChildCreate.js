@@ -3,12 +3,8 @@ import ChildCreateForm from "../ui-components/ChildCreateForm";
 import UseKidsContext from "../hooks/use-kids-context";
 
 function ChildCreate() {
-    const [showForm, setShowForm] = useState(false);
+    const [showForm, setShowForm] = useState(true);
     const { fetchKids } = UseKidsContext();
-
-    const handleNewChildClick = () => {
-        setShowForm(true);
-    };
 
     const handleOnSuccess = () => {
         setShowForm(false);
@@ -20,8 +16,7 @@ function ChildCreate() {
     };
 
     return (
-        <div>
-            <button onClick={handleNewChildClick}>New Child</button>
+        <div>            
             {showForm && <ChildCreateForm onSuccess={handleOnSuccess} onCancel={handleOnCancel} width='40%' /> }
         </div>
     )

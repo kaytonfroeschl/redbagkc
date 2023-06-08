@@ -21,15 +21,41 @@ function Provider ({children}){
     console.log("kids.js: Provider: fetchKids useCallback");
     const fetchKids = useCallback(unstableFetchKids, []);
 
+    const newKids = [];
     if (kids.length !== 0) {
         //flatten the result
         //ChildID, Firstname, Gender, Age, ShirtSize, PantSize, ShoeSize, RBLName, SponsorName
-        //I have no idea how to do this
-        console.log(kids);
-    }
+        //console.log(kids);        
+        kids.map((kid) => {
+            var rbl = "";
+            if (kid.RBL !== null) {
+                rbl = kid.RBL.FirstName + " " + kid.RBL.LastName;
+            };
+
+            var sponsor = "";
+            if (kid.Sponsor !== null) {
+                sponsor = kid.Sponsor.FirstName + " " + kid.Sponsor.LastName;
+            };
+
+            const newKid = {
+                ChildID: kid.ChildID, 
+                Firstname: kid.Firstname, 
+                Gender: kid.Gender, 
+                Age: kid.Age, 
+                ShirtSize: kid.ShirtSize, 
+                PantSize: kid.PantSize, 
+                ShoeSize: kid.ShoeSize, 
+                RBL: rbl, 
+                Sponsor: sponsor
+            };
+
+            newKids.push(newKid);
+        });
+        //console.log(newKids);
+    };
 
     const valuesToShare = {
-        kids,
+        newKids,
         fetchKids,
     };
 
