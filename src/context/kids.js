@@ -6,21 +6,27 @@ const KidsContext = createContext();
 
 function Provider ({children}){
     const [kids, setKids] = useState([]);
-
+    console.log("kids.js: Provider: Begin");
     const unstableFetchKids = async () => {
         try {
             const response = await API.graphql(graphqlOperation(listChildren));
             setKids(response.data.listChildren.items);
             console.log("kids.js: Provider: called API.graphql");
-            console.log(kids);
         } 
         catch (err) { 
             console.log('error in Provider: await API.graphql(graphqlOperation(listChildren))'); 
         };        
     };
     
-    console.log("kids.js: Provider: fetchKids");
+    console.log("kids.js: Provider: fetchKids useCallback");
     const fetchKids = useCallback(unstableFetchKids, []);
+
+    if (kids.length !== 0) {
+        //flatten the result
+        //ChildID, Firstname, Gender, Age, ShirtSize, PantSize, ShoeSize, RBLName, SponsorName
+        //I have no idea how to do this
+        console.log(kids);
+    }
 
     const valuesToShare = {
         kids,

@@ -9,9 +9,8 @@ function App({ user }) {
   console.log("App.js Begin");
 
   const { fetchKids } = UseKidsContext();
-  console.log("App.js A");  
+  console.log("App.js useEffect(fetchKids)");  
   useEffect(() => {fetchKids()}, [fetchKids]);  
-  console.log("App.js B");
 
   return (
       <Authenticator hideSignUp={true}>
@@ -24,8 +23,6 @@ function App({ user }) {
             <button onClick={signOut}>Sign out</button>
             {console.log("App.js Before ChildTable")}
             <ChildTable /> 
-            {console.log("App.js Before ChildCreate")}
-            <ChildCreate />
             {console.log("App.js End")}
           </main>
         )

@@ -12,9 +12,8 @@ console.log("index.js Begin");
 
 Amplify.configure(awsconfig) // Configures the Amplify libraries with the cloud backend set up via the Amplify CLI
 
-console.log("index.js Root");
 const root = ReactDOM.createRoot(document.getElementById('root'));
-console.log("index.js Root Render");
+
 root.render(
     <React.StrictMode>
       <ThemeProvider>

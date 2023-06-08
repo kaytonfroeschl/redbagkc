@@ -25,7 +25,6 @@ const columns =  [
 function ChildTable() {
     console.log("ChildTable: before");
     const { kids } = UseKidsContext();
-    console.log(kids);
     console.log("ChildTable: after");
     return (
         <div>
