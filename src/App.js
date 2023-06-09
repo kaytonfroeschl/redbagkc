@@ -6,10 +6,10 @@ import { useEffect } from 'react';
 import ChildTable from './components/ChildTable';
 
 function App({ user }) {
-  console.log("App.js Begin");
+  //console.log("App.js Begin");
 
   const { fetchKids } = UseKidsContext();
-  console.log("App.js useEffect(fetchKids)");  
+  //console.log("App.js useEffect(fetchKids)");  
   useEffect(() => {fetchKids()}, [fetchKids]);  
 
   return (
@@ -20,10 +20,8 @@ function App({ user }) {
         ) => (
           <main>
             <h1>Welcome to Red Bag</h1>
-            <button onClick={signOut}>Sign out</button>
-            {console.log("App.js Before ChildTable")}
-            <ChildTable /> 
-            {console.log("App.js End")}
+            <button onClick={signOut}>Sign out</button>            
+            <ChildTable />             
           </main>
         )
       }

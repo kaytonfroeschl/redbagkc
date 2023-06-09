@@ -8,13 +8,14 @@ const columns =  [
     {
         Header: "Child ID",
         accessor: "ChildID",
-        Filter: TextSearchFilter,
-        filter: "rankedMatchSorter"
+        Filter: TextSearchFilter
     },
     {
         Header: "First Name",
         accessor: "Firstname",
-        Filter: TextSearchFilter
+        Filter: TextSearchFilter,
+        isNumeric: false,
+        filter: "rankedMatchSorter"
     }, 
     {
         Header: "Red Bag Lady",
@@ -30,10 +31,9 @@ const columns =  [
 
 function ChildTable() {    
     const { newKids } = UseKidsContext();
-
-    const handleNewChildClick = () => {
-        console.log("ChildCreate");
-        <ChildCreate />
+        
+    const handleNewChildClick = () => {        
+        return <ChildCreate />
     };
 
     return (

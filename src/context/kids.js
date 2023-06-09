@@ -6,19 +6,19 @@ const KidsContext = createContext();
 
 function Provider ({children}){
     const [kids, setKids] = useState([]);
-    console.log("kids.js: Provider: Begin");
+    //console.log("kids.js: Provider: Begin");
     const unstableFetchKids = async () => {
         try {
             const response = await API.graphql(graphqlOperation(listChildren));
             setKids(response.data.listChildren.items);
-            console.log("kids.js: Provider: called API.graphql");
+            //console.log("kids.js: Provider: called API.graphql");
         } 
         catch (err) { 
             console.log('error in Provider: await API.graphql(graphqlOperation(listChildren))'); 
         };        
     };
     
-    console.log("kids.js: Provider: fetchKids useCallback");
+    //console.log("kids.js: Provider: fetchKids useCallback");
     const fetchKids = useCallback(unstableFetchKids, []);
 
     const newKids = [];
