@@ -1,6 +1,5 @@
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
-import ChildCreate from './components/ChildCreate';
 import UseKidsContext from './hooks/use-kids-context';
 import { useEffect } from 'react';
 import ChildTable from './components/ChildTable';

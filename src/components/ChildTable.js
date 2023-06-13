@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ChildCreate from "./ChildCreate";
 import DataTable from "./DataTable";
 import UseKidsContext from "../hooks/use-kids-context";
@@ -30,17 +31,40 @@ const columns =  [
 ];
 
 function ChildTable() {    
-    const { newKids } = UseKidsContext();
+    const { kids, fetchKids } = UseKidsContext();
+    const [createKid, setShowCreateKid] = useState(false);
         
     const handleNewChildClick = () => {        
-        return <ChildCreate />
+        setShowCreateKid(true);
+    };
+    const handleNewChildClose = () => {
+        setShowCreateKid(false);        
+    };
+    const handleNewChildSave = () => {
+        fetchKids();
+        setShowCreateKid(false);        
+    };
+    
+    const handleFetchKidsClick = () => {
+        fetchKids();        
+    };
+
+    let main = "";    
+
+    if (createKid) {
+        main = <ChildCreate onClose={handleNewChildClose} onSave={handleNewChildSave} />
+    }else{ 
+        console.log("ChildTable: kids has " + kids.length + " elements");
+        main =
+        <div>            
+            <button onClick={handleNewChildClick}>New Child</button>
+            <button onClick={handleFetchKidsClick}>Fetch Kids</button>
+            <DataTable columns={columns} data={kids} />
+        </div>;
     };
 
     return (
-        <div>
-            <button onClick={handleNewChildClick}>New Child</button>
-            <DataTable columns={columns} data={newKids} />
-        </div>
+        <div>{main}</div>
     )
 };
 
