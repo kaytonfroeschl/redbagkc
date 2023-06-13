@@ -1,0 +1,27 @@
+type Sponsor @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  FirstName: String!
+  LastName: String!
+  Children: [Child] @hasMany(indexName: "bySponsor", fields: ["id"])
+}
+
+type RBL @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  LastName: String!
+  FirstName: String!
+  Children: [Child] @hasMany(indexName: "byRBL", fields: ["id"])
+}
+
+type Child @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Firstname: String!
+  ChildID: String!
+  rblID: ID @index(name: "byRBL")
+  sponsorID: ID @index(name: "bySponsor")
+  ShirtSize: String
+  PantSize: String
+  Gender: String
+  Age: Int
+  ShoeSize: String
+}
+ 

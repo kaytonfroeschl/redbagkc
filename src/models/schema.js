@@ -36,7 +36,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "sponsorID"
+                            "Sponsor"
                         ]
                     }
                 },
@@ -118,7 +118,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "rblID"
+                            "RBL"
                         ]
                     }
                 },
@@ -237,6 +237,36 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "RBL": {
+                    "name": "RBL",
+                    "isArray": false,
+                    "type": {
+                        "model": "RBL"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "rblID"
+                        ]
+                    }
+                },
+                "Sponsor": {
+                    "name": "Sponsor",
+                    "isArray": false,
+                    "type": {
+                        "model": "Sponsor"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "sponsorID"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -300,6 +330,6 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "codegenVersion": "3.4.0",
-    "version": "22a306661b1dce3be2844dc15c32d0ca"
+    "codegenVersion": "3.4.2",
+    "version": "618094ebb207390744e6836f7c79f7fd"
 };

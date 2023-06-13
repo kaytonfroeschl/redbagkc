@@ -5,8 +5,9 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, HeadingProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { AutocompleteProps, GridProps, HeadingProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { RBL as RBL0, Sponsor as Sponsor0 } from "../models";
 export declare type ValidationResponse = {
     hasError: boolean;
     errorMessage?: string;
@@ -20,6 +21,8 @@ export declare type ChildCreateFormInputValues = {
     ShirtSize?: string;
     PantSize?: string;
     ShoeSize?: string;
+    RBL?: RBL0;
+    Sponsor?: Sponsor0;
 };
 export declare type ChildCreateFormValidationValues = {
     Firstname?: ValidationFunction<string>;
@@ -29,6 +32,8 @@ export declare type ChildCreateFormValidationValues = {
     ShirtSize?: ValidationFunction<string>;
     PantSize?: ValidationFunction<string>;
     ShoeSize?: ValidationFunction<string>;
+    RBL?: ValidationFunction<RBL0>;
+    Sponsor?: ValidationFunction<Sponsor0>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ChildCreateFormOverridesProps = {
@@ -43,6 +48,8 @@ export declare type ChildCreateFormOverridesProps = {
     ShirtSize?: PrimitiveOverrideProps<SelectFieldProps>;
     PantSize?: PrimitiveOverrideProps<SelectFieldProps>;
     ShoeSize?: PrimitiveOverrideProps<SelectFieldProps>;
+    RBL?: PrimitiveOverrideProps<AutocompleteProps>;
+    Sponsor?: PrimitiveOverrideProps<AutocompleteProps>;
 } & EscapeHatchProps;
 export declare type ChildCreateFormProps = React.PropsWithChildren<{
     overrides?: ChildCreateFormOverridesProps | undefined | null;
@@ -51,6 +58,7 @@ export declare type ChildCreateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: ChildCreateFormInputValues) => ChildCreateFormInputValues;
     onSuccess?: (fields: ChildCreateFormInputValues) => void;
     onError?: (fields: ChildCreateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: ChildCreateFormInputValues) => ChildCreateFormInputValues;
     onValidate?: ChildCreateFormValidationValues;
 } & React.CSSProperties>;
