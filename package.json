@@ -9,12 +9,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "aws-amplify": "^5.0.25",
-<<<<<<< HEAD
     "bootstrap": "^5.2.3",
-=======
-    "match-sorter": "^6.3.1",
-    "namor": "^3.0.1",
->>>>>>> Bill
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",

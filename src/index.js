@@ -3,10 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.js';
 import { ThemeProvider } from "@aws-amplify/ui-react";
-<<<<<<< HEAD
-
-=======
->>>>>>> Bill
 import "@aws-amplify/ui-react/styles.css"; // Ensure React UI libraries are styled correctly
 import { Amplify } from 'aws-amplify'
 import awsconfig from './aws-exports'
